@@ -1,11 +1,12 @@
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 
-import {DUMMY_NEWS} from "@/dummy-news";
 import ModalBackground from "@/components/modal-background";
+import { getNewsItem } from "@/lib/news";
 
 export default async function InterceptedImagePage({params}) {
   const newsSlug = (await params).slug;
-  const newsRecord = DUMMY_NEWS.find(newsItem => newsItem.slug === newsSlug);
+  const newsRecord = await getNewsItem(newsSlug);
+
   if (!newsRecord) {
     notFound();
   }
